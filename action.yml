@@ -10,7 +10,8 @@ runs:
         distribution: 'adopt'
     - name: Build with Maven
       run: mvn --batch-mode clean package -DskipTests
+      shell: bash
     - name: Release
       uses: softprops/action-gh-release@v1
       with:
-        files: **/target/*!(original)*.jar
+        files: **/target/*.jar
