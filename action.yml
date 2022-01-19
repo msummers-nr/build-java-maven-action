@@ -1,0 +1,16 @@
+name: 'Build Java Maven Action'
+description:
+runs:
+  using: "composite"
+  steps:
+    - name: Set up JDK 11
+      uses: actions/setup-java@v2
+      with:
+        java-version: '11'
+        distribution: 'adopt'
+    - name: Build with Maven
+      run: mvn --batch-mode clean package -DskipTests
+    - name: Release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: **/target/*!(original)*.jar
