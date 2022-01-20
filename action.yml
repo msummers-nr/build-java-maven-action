@@ -18,10 +18,11 @@ runs:
 #      with:
 #        github_token: ${{ github.token }}
     - name: Bump version and push tag
+      id: tag_version
       uses: anothrNick/github-tag-action@1.36.0
       env:
-# TODO Figure-out how to pass this in
-#        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        # TODO Figure-out how to pass this in
+        # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         GITHUB_TOKEN: ${{ github.token }}
         WITH_V: true
     - name: Release
