@@ -13,15 +13,21 @@ runs:
       run: mvn --batch-mode clean package -DskipTests
       shell: bash
     - name: Bump version and push tag
-      id: tag_version
+      id: bumpTag
       uses: mathieudutour/github-tag-action@v6.0
       with:
         github_token: ${{ github.token }}
       # TODO Figure-out how to pass this in
       # github_token: ${{ secrets.GITHUB_TOKEN }}
+    - name: Bump version and push tag
+      id: bumpTag2
+      uses: anothrNick/github-tag-action@1.36.0
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
+        WITH_V: true
     - name: Release
       uses: softprops/action-gh-release@v1
       with:
         files: '**/target/*.jar'
-        tag_name: ${{ steps.tag_version.outputs.new_tag }}
+        tag_name: ${{ steps.bumpTag2.outputs.new_tag }}
         
