@@ -11,7 +11,14 @@ runs:
     - name: Build with Maven
       run: mvn --batch-mode clean package -DskipTests
       shell: bash
+    - name: Bump version and push tag
+      id: tag_version
+      uses: mathieudutour/github-tag-action@v6.0
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
     - name: Release
       uses: softprops/action-gh-release@v1
       with:
         files: '**/target/*.jar'
+        tag_name: ${{ steps.tag_version.outputs.new_tag }}
+        
