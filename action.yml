@@ -1,14 +1,23 @@
 name: 'Build Java Maven Action'
 #
-description:
+description: Build a Java/Maven repo
+
+inputs:
+  java_version:
+    description: The Java version to use
+    required: true
+  java_distribution:
+    description: The Java distribution to use
+    required: true
+
 runs:
   using: "composite"
   steps:
-    - name: Set up JDK 11
+    - name: Set up JDK
       uses: actions/setup-java@v2
       with:
-        java-version: '11'
-        distribution: 'adopt'
+        java-version: ${{ inputs.java_version }}
+        distribution: ${{ inputs.java_distribution }}
     - name: Build with Maven
       run: mvn --batch-mode clean package -DskipTests
       shell: bash
